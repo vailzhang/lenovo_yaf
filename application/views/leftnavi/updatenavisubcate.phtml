@@ -1,0 +1,87 @@
+						<script src="../assets/scripts.js"></script>
+						<script src="../assets/navisubcate.js"></script>
+						<div class="block">
+							<div class="navbar navbar-inner block-header">
+								<div class="muted pull-left">左屏导航</div>
+								<div class="pull-right">
+									<span class="badge badge-info">最后修改日期: 2014-4-1 14:11</span>
+								</div>
+							</div>
+							<div class="block-content collapse in">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th><button class="btn btn-small btn-info"
+													data-toggle="modal" data-target="#myModal" id="add">添加</button>
+												<button class="btn btn-small btn-info" id="sort_btn">排序</button>
+											</th>
+											<th>子类别名称</th>											
+											<th>所属父类</th>
+											<th>子类别URL</th>
+											<th>位置</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody class="drag_tr">
+									<?php foreach ($navisubcate as $k=>$v){?>
+										<tr>
+											<td>
+												<span class="label label-default drag_holder">点我拖动</span>
+												<p><?=$v['id']?></p>
+											</td>
+											<td><a href="/leftnavi/naviitem?subcate_id=<?=$v['id']?>"><?=$v['title']?></a></td>
+											<td>
+											<input type='hidden' value='<?=$v['cate_id']?>' id='cate_id'>
+											<input type='hidden' value='<?=$v['a_color']?>' id='a_color'>
+											<input type='hidden' value='<?=$v['b_color']?>' id='b_color'>
+											<?php
+											foreach ($nav_cate as $k_cate=>$v_cate){
+												if($v_cate['id'] == $v['cate_id']){
+													echo $v_cate['title'];
+													break;
+												}
+											}
+											?>
+											</td>
+											<td><a href="<?=$v['url']?>"><?=$v['url']?></a></td>
+											<td><?=$v['position']?></td>
+											<td>
+												<button class="btn btn-small btn-primary btn-modify"
+													data-toggle="modal" data-target="#myModal" id="update">修改</button>
+												<button class="btn btn-small btn-danger" id="del">删除</button>
+											</td>
+										</tr>
+									<?php }?>									
+									</tbody>
+								</table>
+							</div>
+							 <div class="pagination pagination-small pull-right">
+                                 <ul>
+		                             <li><a href="navisubcate?cate_id=<?=$cate_id?>&page=<?=$nowPage-1?>">Prev</a></li>
+		                             <?php if($numPages==1){?>
+                                    <li class="page_btn active"><a href="navisubcate?cate_id=<?=$cate_id?>" >1</a></li>
+                                    <?php }else{?>
+		                             <li class="page_btn <?php if($nowPage==1){echo "active";}?>">
+		                             <a href="navisubcate?cate_id=<?=$cate_id?>&page=1" >1</a>
+		                             </li>
+		                             <?php if ($nowPage>4) {?>
+		                             <li><a>...</a></li>
+		                             <?php }?>
+		                             <?php for ($page = 2;$page < $numPages;$page ++){
+											if (($page>=$nowPage-2)&&($page<=$nowPage+2)) {								
+		                             	 ?>
+		                             <li class="page_btn <?php if($page == $nowPage){echo "active";}?>">
+		                             <a href="navisubcate?cate_id=<?=$cate_id?>&page=<?=$page?>"><?=$page?></a>
+		                             </li>
+		                             <?php }}?>
+		                             <?php if ($nowPage+3<$numPages) {?>
+		                             <li><a>...</a></li>
+		                             <?php }?>
+		                             <li class="page_btn <?php if($nowPage==$numPages){echo "active";}?>">
+		                             <a href="navisubcate?cate_id=<?=$cate_id?>&page=<?=$numPages?>"><?=$numPages?></a>
+		                             </li>    
+		                             <?php }?>             
+		                             <li><a href="navisubcate?cate_id=<?=$cate_id?>&page=<?=$nowPage+1?>">Next</a></li>     
+		                          </ul>
+                            </div>
+						</div>

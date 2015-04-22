@@ -1,0 +1,79 @@
+							<script src="../assets/urlissueitem.js"></script>
+							<div class="block">
+							<div class="navbar navbar-inner block-header">
+								<div class="muted pull-left">网址下发</div>
+								<div class="pull-right">
+									<span class="badge badge-info">最后修改日期: 2014-4-1 14:11</span>
+								</div>
+							</div>
+							<div class="block-content collapse in">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th><button class="btn btn-small btn-info"
+													data-toggle="modal" data-target="#myModal" id="add">添加</button></th>
+											<th>类别名称</th>
+											<th>网址关键字</th>
+											<th>链接</th>
+											<th>网址名称</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+									<?php foreach ($urlissueItem as $k=>$v){?>
+										<tr>
+											<td><?=$v['id']?></td>
+											<td>
+											<input type="hidden" id="cate_keyInput" value="<?=$v['cate_key']?>">
+											<?php
+											foreach ($urlissueCate as $k_cate=>$v_cate){
+												if($v_cate['cate_key'] == $v['cate_key']){
+													echo $v_cate['describe'];
+													break;
+												}
+											}
+											?>
+											</td>
+											<td><?=$v['item_key']?></td>
+											<td><?=$v['link']?></td>
+											<td><?=$v['describe']?></td>
+											<td>
+												<button class="btn btn-small btn-primary btn-modify"
+													data-toggle="modal" data-target="#myModal" id="update">修改</button>
+												<button class="btn btn-small btn-danger" id="del">删除</button>
+											</td>
+										</tr>
+									<?php }?>									
+									</tbody>
+								</table>
+							</div>
+							 <div class="pagination pagination-small pull-right">
+                                 <ul>
+		                             <li><a href="urlissueitem?cate_key=<?=$cate_key?>&page=<?=$nowPage-1?>">Prev</a></li>
+		                             <?php if($numPages==1){?>
+                                    <li class="page_btn active"><a href="urlissueitem?cate_key=<?=$cate_key?>" >1</a></li>
+                                    <?php }else{?>
+		                             <li class="page_btn <?php if($nowPage==1){echo "active";}?>">
+		                             <a href="urlissueitem?cate_key=<?=$cate_key?>&page=1" >1</a>
+		                             </li>
+		                             <?php if ($nowPage>4) {?>
+		                             <li><a>...</a></li>
+		                             <?php }?>
+		                             <?php for ($page = 2;$page < $numPages;$page ++){
+											if (($page>=$nowPage-2)&&($page<=$nowPage+2)) {								
+		                             	 ?>
+		                             <li class="page_btn <?php if($page == $nowPage){echo "active";}?>">
+		                             <a href="urlissueitem?cate_key=<?=$cate_key?>&page=<?=$page?>"><?=$page?></a>
+		                             </li>
+		                             <?php }}?>
+		                             <?php if ($nowPage+3<$numPages) {?>
+		                             <li><a>...</a></li>
+		                             <?php }?>
+		                             <li class="page_btn <?php if($nowPage==$numPages){echo "active";}?>">
+		                             <a href="urlissueitem?cate_key=<?=$cate_key?>&page=<?=$numPages?>"><?=$numPages?></a>
+		                             </li> 
+		                             <?php }?>                
+		                             <li><a href="urlissueitem?cate_key=<?=$cate_key?>&page=<?=$nowPage+1?>">Next</a></li>     
+		                        </ul>
+                            </div>
+						</div>

@@ -1,0 +1,85 @@
+						<script src="../assets/scripts.js"></script>
+						<script src="../assets/navicate.js"></script>
+						<div class="block">
+							<div class="navbar navbar-inner block-header">
+								<div class="muted pull-left">网址数据</div>
+								<div class="pull-right">
+									<span class="badge badge-info">最后修改日期: 2014-4-1 14:11</span>
+								</div>
+							</div>
+							<div class="block-content collapse in">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th><button class="btn btn-small btn-info"
+													data-toggle="modal" data-target="#myModal" id="add">添加</button>
+												<button class="btn btn-small btn-info" id="sort_btn">排序</button>
+											</th>
+											<th>网址名称</th>											
+											<th>所属子类</th>
+											<th>网址URL</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody class="drag_tr">
+									<?php foreach ($naviitem as $k=>$v){?>
+										<tr>
+											<td>
+												<span class="label label-default drag_holder">点我拖动</span>
+												<p><?=$v['id']?></p>
+											</td>
+											<td><?=$v['title']?></td>
+											<td>
+											<input type='hidden' value='<?=$v['subcate_id']?>' id='subcate_id'>
+											<input type='hidden' value='<?=$v['a_color']?>' id='a_color'>
+											<input type='hidden' value='<?=$v['b_color']?>' id='b_color'>
+											<?php
+											foreach ($navisubcate as $k_subcate=>$v_subcate){
+												if($v_subcate['id'] == $v['subcate_id']){
+													echo $v_subcate['title'];
+													break;
+												}
+											}
+											?>
+											</td>
+											<td><a href="<?=$v['url']?>"><?=$v['url']?></a></td>
+											<td>
+												<button class="btn btn-small btn-primary btn-modify"
+													data-toggle="modal" data-target="#myModal" id="update">修改</button>
+												<button class="btn btn-small btn-danger" id="del">删除</button>
+											</td>
+										</tr>
+									<?php }?>									
+									</tbody>
+								</table>
+							</div>
+							 <div class="pagination pagination-small pull-right">
+                                <ul>
+		                             <li><a href="naviitem?subcate_id=<?=$subcate_id?>&page=<?=$nowPage-1?>">Prev</a></li>
+		                             	<?php if($numPages==1){?>
+                                    <li class="page_btn active"><a href="naviitem?subcate_id=<?=$subcate_id?>" >1</a></li>
+                                    <?php }else{?>
+		                             <li class="page_btn <?php if($nowPage==1){echo "active";}?>">
+		                             <a href="naviitem?subcate_id=<?=$subcate_id?>&page=1" >1</a>
+		                             </li>
+		                             <?php if ($nowPage>4) {?>
+		                             <li><a>...</a></li>
+		                             <?php }?>
+		                             <?php for ($page = 2;$page < $numPages;$page ++){
+											if (($page>=$nowPage-2)&&($page<=$nowPage+2)) {								
+		                             	 ?>
+		                             <li class="page_btn <?php if($page == $nowPage){echo "active";}?>">
+		                             <a href="naviitem?subcate_id=<?=$subcate_id?>&page=<?=$page?>"><?=$page?></a>
+		                             </li>
+		                             <?php }}?>
+		                             <?php if ($nowPage+3<$numPages) {?>
+		                             <li><a>...</a></li>
+		                             <?php }?>
+		                             <li class="page_btn <?php if($nowPage==$numPages){echo "active";}?>">
+		                             <a href="naviitem?subcate_id=<?=$subcate_id?>&page=<?=$numPages?>"><?=$numPages?></a>
+		                             </li>  
+		                             <?php }?>               
+		                             <li><a href="naviitem?subcate_id=<?=$subcate_id?>&page=<?=$nowPage+1?>">Next</a></li>     
+		                        </ul>
+                            </div>
+						</div>
